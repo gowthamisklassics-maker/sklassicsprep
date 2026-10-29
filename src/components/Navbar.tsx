@@ -10,22 +10,22 @@ const Navbar = () => {
   return (
     <>
       <style>{`
-        .sk-navbar {
-          position: sticky;
-          top: 0;
-          z-index: 1000;
-          width: 100%;
-          height: 68px;
-          background: #111827;
-          border-top: 2px solid #303044;
-          border-bottom: 1px solid #303548;
-          font-family: Inter, "Segoe UI", Arial, sans-serif;
-        }
-
+        .sk-navbar,
         .sk-navbar *,
         .sk-navbar *::before,
         .sk-navbar *::after {
           box-sizing: border-box;
+        }
+
+        .sk-navbar {
+          position: relative;
+          z-index: 1000;
+          width: 100%;
+          height: 60px;
+          margin: 0;
+          padding: 0;
+          background: #111827;
+          border-bottom: 1px solid #263044;
         }
 
         .sk-navbar-container {
@@ -66,6 +66,7 @@ const Navbar = () => {
           font-size: 14px;
           font-weight: 600;
           text-decoration: none;
+          white-space: nowrap;
           transition: color 0.2s ease, filter 0.2s ease;
         }
 
@@ -115,75 +116,164 @@ const Navbar = () => {
           display: none;
           width: 42px;
           height: 40px;
+          flex-shrink: 0;
           border: 1px solid #3a4052;
           border-radius: 10px;
           background: #171c2c;
           color: white;
           font-size: 23px;
+          line-height: 1;
           cursor: pointer;
         }
 
-        @media (max-width: 700px) {
-          .sk-navbar {
-            height: 66px;
-          }
+        .sk-navbar-toggle:focus-visible,
+        .sk-navbar-links a:focus-visible {
+          outline: 2px solid #ff8b42;
+          outline-offset: 3px;
+        }
 
-          .sk-navbar-container {
-            width: 92%;
-            gap: 12px;
-          }
+        /* Tablet */
+        
+/* Mobile Navbar */
+@media (max-width: 700px) {
+  .sk-navbar {
+    width: 100%;
+    height: 72px;
+  }
 
-          .sk-navbar-logo {
-            width: 155px;
-          }
+  .sk-navbar-container {
+    width: 100%;
+    height: 100%;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
 
-          .sk-navbar-toggle {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: auto;
-          }
+  .sk-navbar-logo {
+    width: 150px;
+    max-width: calc(100% - 56px);
+    flex-shrink: 1;
+  }
 
-          .sk-navbar-links {
-            position: absolute;
-            top: 64px;
-            left: 0;
-            right: 0;
-            display: ${menuOpen ? "flex" : "none"};
-            flex-direction: column;
-            align-items: stretch;
-            gap: 0;
-            padding: 12px 5% 18px;
-            margin: 0;
-            border-bottom: 1px solid #303548;
-            background: #111827;
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
-          }
+  .sk-navbar-logo img {
+    display: block;
+    width: 100%;
+    max-height: 48px;
+    object-fit: contain;
+  }
+
+  .sk-navbar-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 42px;
+    width: 42px;
+    height: 40px;
+    margin-left: auto;
+    padding: 0;
+  }
+
+  .sk-navbar-links {
+    position: absolute;
+    top: 71px;
+    left: 0;
+    right: 0;
+    display: ${menuOpen ? "flex" : "none"};
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 12px 16px 18px;
+    margin: 0;
+    background: #111827;
+    border-bottom: 1px solid #303548;
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  .sk-navbar-links > a {
+    display: flex;
+    align-items: center;
+    min-height: 46px;
+    padding: 12px;
+  }
+
+  .sk-navbar-links .sk-nav-login,
+  .sk-navbar-links .sk-nav-register {
+    width: 100%;
+    min-height: 44px;
+    margin: 6px 0;
+    justify-content: center;
+  }
+}
+
+/* Small mobile screens */
+@media (max-width: 380px) {
+  .sk-navbar-container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .sk-navbar-logo {
+    width: 140px;
+  }
+
+  .sk-navbar-toggle {
+    flex-basis: 40px;
+    width: 40px;
+    height: 38px;
+  }
+
+  .sk-navbar-links {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
 
           .sk-navbar-links > a {
-            padding: 14px 8px;
+            display: flex;
+            align-items: center;
+            min-height: 46px;
+            padding: 12px;
+            white-space: normal;
           }
 
           .sk-navbar-links .sk-nav-login,
           .sk-navbar-links .sk-nav-register {
             justify-content: center;
-            margin: 7px 0;
             width: 100%;
+            min-height: 44px;
+            margin: 6px 0;
           }
         }
 
-        @media (min-width: 701px) and (max-width: 900px) {
+        /* Extra-small phones */
+        @media (max-width: 380px) {
           .sk-navbar-container {
-            width: 94%;
-            gap: 18px;
+            padding-left: 14px;
+            padding-right: 14px;
           }
 
           .sk-navbar-logo {
-            width: 150px;
+            width: 130px;
+          }
+
+          .sk-navbar-toggle {
+            width: 38px;
+            height: 38px;
           }
 
           .sk-navbar-links {
-            gap: 20px;
+            padding-left: 14px;
+            padding-right: 14px;
+          }
+        }
+
+        /* Reduced motion accessibility */
+        @media (prefers-reduced-motion: reduce) {
+          .sk-navbar-links > a {
+            transition: none;
           }
         }
       `}</style>
@@ -204,12 +294,14 @@ const Navbar = () => {
             className="sk-navbar-toggle"
             aria-label={menuOpen ? "Close navigation" : "Open navigation"}
             aria-expanded={menuOpen}
+            aria-controls="sk-main-navigation"
             onClick={() => setMenuOpen((previous) => !previous)}
           >
             {menuOpen ? "×" : "☰"}
           </button>
 
           <nav
+            id="sk-main-navigation"
             className="sk-navbar-links"
             aria-label="Main navigation"
           >

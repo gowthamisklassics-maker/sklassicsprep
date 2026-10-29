@@ -1,45 +1,54 @@
 
+import {
+  Stethoscope,
+  Settings,
+  Calculator,
+  Landmark,
+  BookOpen,
+  GraduationCap,
+} from "lucide-react";
+
 const exams = [
   {
     name: "NEET",
     subtitle: "Medical Entrance",
     students: "500K+ students",
-    icon: "⚕",
+    Icon: Stethoscope,
     color: "#09b887",
   },
   {
     name: "JEE Main",
     subtitle: "Engineering Entrance",
     students: "400K+ students",
-    icon: "⚙",
+    Icon: Settings,
     color: "#4778ff",
   },
   {
     name: "JEE Advanced",
     subtitle: "IIT Entrance",
     students: "200K+ students",
-    icon: "▦",
+    Icon: Calculator,
     color: "#8950f6",
   },
   {
     name: "EAMCET",
     subtitle: "AP/TS State Exam",
     students: "300K+ students",
-    icon: "♜",
+    Icon: Landmark,
     color: "#ff513c",
   },
   {
     name: "GATE",
     subtitle: "Graduate Aptitude",
     students: "150K+ students",
-    icon: "◧",
+    Icon: BookOpen,
     color: "#1689ee",
   },
   {
     name: "UPSC",
     subtitle: "Civil Services",
     students: "100K+ students",
-    icon: "♟",
+    Icon: GraduationCap,
     color: "#ff9500",
   },
 ];
@@ -104,12 +113,32 @@ const ExamSection = () => {
           border: 1px solid #151d32;
           border-radius: 23px;
           box-shadow: 0 14px 25px rgba(0, 0, 0, 0.15);
-          transition: transform 0.2s ease, border-color 0.2s ease;
+          transition:
+            background 0.3s ease,
+            transform 0.25s ease,
+            border-color 0.25s ease,
+            box-shadow 0.25s ease;
         }
 
-        .sk-exam-card:hover {
+        /* Gradient on hover and keyboard focus */
+        .sk-exam-card:hover,
+        .sk-exam-card:focus,
+        .sk-exam-card:focus-visible,
+        .sk-exam-card:focus-within {
+          background: linear-gradient(
+            120deg,
+            #25264f 0%,
+            #421d3c 55%,
+            #63321f 100%
+          ) !important;
+          border-color: rgba(255, 255, 255, 0.25);
           transform: translateY(-4px);
-          border-color: #ff781d;
+          box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .sk-exam-card:focus-visible {
+          outline: 2px solid #ff9500;
+          outline-offset: 3px;
         }
 
         .sk-exam-icon {
@@ -120,9 +149,14 @@ const ExamSection = () => {
           justify-content: center;
           margin-bottom: 24px;
           border-radius: 18px;
-          color: white;
-          font-size: 27px;
-          font-weight: 700;
+          color: #ffffff;
+          flex-shrink: 0;
+        }
+
+        .sk-exam-icon svg {
+          width: 25px;
+          height: 25px;
+          stroke-width: 2.4;
         }
 
         .sk-exam-card h3 {
@@ -201,6 +235,11 @@ const ExamSection = () => {
             border-radius: 15px;
           }
 
+          .sk-exam-icon svg {
+            width: 23px;
+            height: 23px;
+          }
+
           .sk-exam-card h3 {
             font-size: 14px;
           }
@@ -226,20 +265,24 @@ const ExamSection = () => {
           </div>
 
           <div className="sk-exams-grid">
-            {exams.map((exam) => (
-              <article className="sk-exam-card" key={exam.name}>
+            {exams.map(({ name, subtitle, students, Icon, color }) => (
+              <article
+                className="sk-exam-card"
+                key={name}
+                tabIndex={0}
+              >
                 <div
                   className="sk-exam-icon"
-                  style={{ backgroundColor: exam.color }}
+                  style={{ backgroundColor: color }}
                 >
-                  {exam.icon}
+                  <Icon aria-hidden="true" />
                 </div>
 
-                <h3>{exam.name}</h3>
-                <p>{exam.subtitle}</p>
+                <h3>{name}</h3>
+                <p>{subtitle}</p>
 
                 <span className="sk-exam-students">
-                  {exam.students}
+                  {students}
                 </span>
               </article>
             ))}

@@ -1,45 +1,54 @@
 
+import {
+  BrainCircuit,
+  Settings,
+  Grid3X3,
+  ChartNoAxesColumn,
+  ScrollText,
+  UserRound,
+} from "lucide-react";
+
 const features = [
   {
     title: "AI-Powered Explanations",
     description:
       "Get instant, detailed explanations for every question. Our AI breaks down complex concepts into easy-to-understand steps.",
-    icon: "♧",
+    Icon: BrainCircuit,
     color: "#9747f5",
   },
   {
     title: "Live Mock Tests",
     description:
       "Join thousands of students in real-time mock tests. Experience exam pressure and compete on leaderboards.",
-    icon: "⚙",
+    Icon: Settings,
     color: "#4169f1",
   },
   {
     title: "Personalized Practice",
     description:
       "Smart algorithms identify weak areas and create customised practice sessions to improve your score.",
-    icon: "▦",
+    Icon: Grid3X3,
     color: "#11bfd5",
   },
   {
     title: "Detailed Analytics",
     description:
       "Track your progress with comprehensive analytics. Understand your strengths and areas for improvement.",
-    icon: "◧",
+    Icon: ChartNoAxesColumn,
     color: "#ffc51b",
   },
   {
     title: "Previous Year Papers",
     description:
       "Access 20+ years of previous exam papers with detailed solutions and difficulty analysis.",
-    icon: "▤",
+    Icon: ScrollText,
     color: "#594de9",
   },
   {
     title: "Doubt Resolution",
     description:
       "Ask your doubts and get quick, accurate answers from our AI tutor or expert mentors.",
-    icon: "♟",
+    Icon: UserRound,
     color: "#ed4e9b",
   },
 ];
@@ -49,8 +58,9 @@ const FeaturesSection = () => (
     <style>{`
       .sk-features {
         width: 100%;
-        padding: 65px 0 70px;
+        padding: 24px 0 4px;
         color: #f7f8fc;
+        background: #080913;
         font-family: Inter, "Segoe UI", Arial, sans-serif;
       }
 
@@ -66,7 +76,7 @@ const FeaturesSection = () => (
 
       .sk-features-heading {
         max-width: 760px;
-        margin: 0 auto 42px;
+        margin: 0 auto 24px;
         text-align: center;
       }
 
@@ -97,10 +107,9 @@ const FeaturesSection = () => (
         align-items: stretch;
       }
 
-      /* Default card appearance */
       .sk-feature-card {
         min-width: 0;
-        min-height: 230px;
+        min-height: 260px;
         padding: 32px 24px;
         display: flex;
         flex-direction: column;
@@ -109,16 +118,14 @@ const FeaturesSection = () => (
         background: #030718;
         border: 1px solid #151d32;
         border-radius: 25px;
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        box-shadow: none;
         transition:
           background 0.35s ease,
           transform 0.3s ease,
           border-color 0.3s ease,
           box-shadow 0.3s ease;
-        outline: none;
       }
 
-      /* Gradient on mouse hover and keyboard focus */
       .sk-feature-card:hover,
       .sk-feature-card:focus,
       .sk-feature-card:focus-visible,
@@ -134,24 +141,33 @@ const FeaturesSection = () => (
         transform: translateY(-4px);
       }
 
+      .sk-feature-card:focus-visible {
+        outline: 2px solid #ff9500;
+        outline-offset: 3px;
+      }
+
       .sk-feature-icon {
         width: 64px;
         height: 64px;
         flex-shrink: 0;
-        margin-bottom: 20px;
+        margin: 0 auto 22px;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 19px;
+        border-radius: 20px;
         color: #ffffff;
-        font-size: 31px;
-        font-weight: 700;
+      }
+
+      .sk-feature-icon svg {
+        width: 25px;
+        height: 25px;
+        stroke-width: 2.6;
       }
 
       .sk-feature-card h3 {
-        margin: 0 0 12px;
+        margin: 0 0 14px;
         color: #f8fafc;
-        font-size: 17px;
+        font-size: 16px;
         font-weight: 750;
         line-height: 1.4;
       }
@@ -159,9 +175,9 @@ const FeaturesSection = () => (
       .sk-feature-card p {
         max-width: 380px;
         margin: 0;
-        color: #c0c6d4;
-        font-size: 14px;
-        line-height: 1.8;
+        color: #d1d5e0;
+        font-size: 13px;
+        line-height: 1.9;
       }
 
       @media (max-width: 900px) {
@@ -172,31 +188,15 @@ const FeaturesSection = () => (
         .sk-feature-card {
           padding: 26px 18px;
         }
-
-        .sk-feature-card h3 {
-          font-size: 15px;
-        }
-
-        .sk-feature-card p {
-          font-size: 13px;
-        }
       }
 
       @media (max-width: 650px) {
         .sk-features {
-          padding: 45px 0;
+          padding: 40px 0;
         }
 
         .sk-features-inner {
           width: 92%;
-        }
-
-        .sk-features-heading {
-          margin-bottom: 28px;
-        }
-
-        .sk-features-heading p {
-          font-size: 13px;
         }
 
         .sk-features-grid {
@@ -205,7 +205,7 @@ const FeaturesSection = () => (
         }
 
         .sk-feature-card {
-          min-height: 205px;
+          min-height: 220px;
           padding: 25px 20px;
         }
       }
@@ -231,23 +231,23 @@ const FeaturesSection = () => (
         </div>
 
         <div className="sk-features-grid">
-          {features.map((feature) => (
+          {features.map(({ title, description, Icon, color }) => (
             <article
               className="sk-feature-card"
-              key={feature.title}
+              key={title}
               tabIndex={0}
-              aria-label={feature.title}
+              aria-label={title}
             >
               <div
                 className="sk-feature-icon"
-                style={{ backgroundColor: feature.color }}
+                style={{ backgroundColor: color }}
                 aria-hidden="true"
               >
-                {feature.icon}
+                <Icon />
               </div>
 
-              <h3>{feature.title}</h3>
-              <p>{feature.description}</p>
+              <h3>{title}</h3>
+              <p>{description}</p>
             </article>
           ))}
         </div>
