@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import type { FormEvent } from "react";
 import sklassicsLogo from "../assets/sklassics-logo.png";
 
 export default function Login() {
@@ -8,11 +9,11 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // Connect this form to your authentication backend to send an OTP
-    // or verify a password. This demo does not authenticate users.
+    // Connect your authentication backend to send OTPs
+    // or verify passwords. This demo does not authenticate users.
     alert(
       loginMethod === "otp"
         ? `Connect your backend to send an OTP to ${email}.`
@@ -23,12 +24,21 @@ export default function Login() {
   return (
     <>
       <style>{`
+        .sk-login-page,
+        .sk-login-page *,
+        .sk-login-page *::before,
+        .sk-login-page *::after {
+          box-sizing: border-box;
+        }
+
         .sk-login-page {
+          width: 100%;
           min-height: 100vh;
           display: flex;
           align-items: center;
           justify-content: center;
           padding: 55px 24px;
+          overflow-x: hidden;
           background:
             radial-gradient(ellipse at 10% 20%, rgba(92, 35, 68, .16), transparent 42%),
             radial-gradient(ellipse at 90% 10%, rgba(24, 43, 78, .25), transparent 40%),
@@ -37,18 +47,19 @@ export default function Login() {
           font-family: Inter, "Segoe UI", Arial, sans-serif;
         }
 
-        .sk-login-page *,
-        .sk-login-page *::before,
-        .sk-login-page *::after {
-          box-sizing: border-box;
-        }
-
         .sk-login-layout {
           width: min(1264px, 100%);
           display: grid;
           grid-template-columns: minmax(0, 1.2fr) minmax(370px, .9fr);
           align-items: center;
           gap: clamp(50px, 7vw, 105px);
+          margin: auto;
+        }
+
+        /* Promotional content */
+
+        .sk-login-intro {
+          min-width: 0;
         }
 
         .sk-login-intro h1 {
@@ -129,8 +140,11 @@ export default function Login() {
           font-size: 11px;
         }
 
+        /* Login card */
+
         .sk-login-card {
           width: 100%;
+          min-width: 0;
           padding: 42px 27px;
           border: 1px solid #202b40;
           border-radius: 23px;
@@ -157,21 +171,24 @@ export default function Login() {
           text-align: center;
           color: #f7f8fc;
           font-size: 21px;
+          line-height: 1.35;
           font-weight: 750;
         }
 
         .sk-login-card-description {
-          margin: 0 0 17px;
+          margin: 0 0 22px;
           text-align: center;
           color: #a8adbc;
-          font-size: 12px;
+          font-size: 13px;
           line-height: 1.6;
         }
+
+        /* Login and register tabs */
 
         .sk-login-tabs,
         .sk-login-methods {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
           gap: 4px;
           padding: 4px;
           border: 1px solid #202b40;
@@ -191,6 +208,7 @@ export default function Login() {
 
         .sk-login-tabs button,
         .sk-login-methods button {
+          min-width: 0;
           min-height: 37px;
           border: 0;
           border-radius: 25px;
@@ -217,12 +235,17 @@ export default function Login() {
           color: #ff781d;
         }
 
+        /* Form fields */
+
         .sk-login-form {
           display: grid;
           gap: 15px;
+          width: 100%;
         }
 
         .sk-login-input-wrap {
+          width: 100%;
+          min-width: 0;
           min-height: 53px;
           display: flex;
           align-items: center;
@@ -249,7 +272,12 @@ export default function Login() {
           color: #939db0;
         }
 
+        .sk-login-input-wrap:focus-within {
+          border-color: #ff781d;
+        }
+
         .sk-login-submit {
+          width: 100%;
           min-height: 51px;
           margin-top: 5px;
           border: 0;
@@ -276,10 +304,23 @@ export default function Login() {
           font-size: 11px;
         }
 
-        @media (max-width: 850px) {
+        .sk-login-tabs button:focus-visible,
+        .sk-login-methods button:focus-visible,
+        .sk-login-submit:focus-visible {
+          outline: 2px solid #ff8b42;
+          outline-offset: 3px;
+        }
+
+        /* Tablet layout */
+
+        @media (max-width: 850px) and (min-width: 601px) {
+          .sk-login-page {
+            padding: 35px 24px;
+          }
+
           .sk-login-layout {
             max-width: 520px;
-            grid-template-columns: 1fr;
+            grid-template-columns: minmax(0, 1fr);
             gap: 35px;
           }
 
@@ -292,27 +333,175 @@ export default function Login() {
           }
         }
 
-        @media (max-width: 480px) {
+        /* Mobile: show only the login form */
+
+        @media (max-width: 600px) {
           .sk-login-page {
-            padding: 35px 16px;
+            width: 100%;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 15px;
+            margin: 0;
           }
 
-          .sk-login-intro h1 {
-            font-size: 27px;
+          .sk-login-intro {
+            display: none !important;
+          }
+
+          .sk-login-layout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 420px;
+            min-width: 0;
+            margin: auto;
+            gap: 0;
           }
 
           .sk-login-card {
-            padding: 28px 17px;
+            width: 100%;
+            max-width: 420px;
+            min-width: 0;
+            padding: 0;
+            margin: 0;
+            border: none;
+            border-radius: 0;
+            background: transparent;
+            box-shadow: none;
           }
 
-          .sk-login-stats {
-            gap: 20px;
+          .sk-login-brand {
+            justify-content: center;
+            margin-bottom: 24px;
+          }
+
+          .sk-login-brand img {
+            width: 205px;
+            max-width: 75%;
+            max-height: 62px;
+          }
+
+          .sk-login-card h2 {
+            margin: 0 0 8px;
+            font-size: 21px;
+            line-height: 1.35;
+            text-align: center;
+          }
+
+          .sk-login-card-description {
+            margin: 0 0 22px;
+            font-size: 13px;
+            line-height: 1.6;
+            text-align: center;
+          }
+
+          .sk-login-tabs {
+            width: 100%;
+            margin-bottom: 18px;
+            padding: 4px;
+            gap: 4px;
+          }
+
+          .sk-login-tabs button {
+            min-width: 0;
+            min-height: 40px;
+            font-size: 13px;
+          }
+
+          .sk-login-methods {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 4px;
+          }
+
+          .sk-login-methods button {
+            min-width: 0;
+            min-height: 34px;
+            font-size: 12px;
+          }
+
+          .sk-login-form {
+            width: 100%;
+            gap: 15px;
+          }
+
+          .sk-login-input-wrap {
+            width: 100%;
+            min-height: 58px;
+            padding: 0 15px;
+            border-radius: 16px;
+          }
+
+          .sk-login-input-wrap input {
+            min-width: 0;
+            font-size: 14px;
+          }
+
+          .sk-login-submit {
+            width: 100%;
+            min-height: 55px;
+            margin-top: 5px;
+            border-radius: 14px;
+            font-size: 14px;
+          }
+
+          .sk-login-secure {
+            margin-top: 17px;
+            font-size: 12px;
+            text-align: center;
+          }
+        }
+
+        /* Extra-small mobile screens */
+
+        @media (max-width: 380px) {
+          .sk-login-page {
+            padding: 20px 15px;
+          }
+
+          .sk-login-brand {
+            margin-bottom: 20px;
+          }
+
+          .sk-login-brand img {
+            width: 190px;
+          }
+
+          .sk-login-card h2 {
+            font-size: 20px;
+          }
+
+          .sk-login-card-description {
+            font-size: 12px;
+          }
+
+          .sk-login-input-wrap {
+            min-height: 54px;
+            padding: 0 12px;
+          }
+
+          .sk-login-submit {
+            min-height: 52px;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .sk-login-tabs button,
+          .sk-login-methods button,
+          .sk-login-submit {
+            transition: none;
           }
         }
       `}</style>
 
       <main className="sk-login-page">
         <div className="sk-login-layout">
+          {/* Desktop promotional content */}
           <section className="sk-login-intro">
             <h1>
               Your quizzes, <span>smarter &amp; faster.</span>
@@ -325,7 +514,9 @@ export default function Login() {
 
             <div className="sk-login-benefits">
               <div className="sk-login-benefit">
-                <div className="sk-login-benefit-icon">♢</div>
+                <div className="sk-login-benefit-icon" aria-hidden="true">
+                  ♢
+                </div>
                 <div>
                   <h3>Secure assessments</h3>
                   <p>Anti-cheat, browser lock &amp; question shuffling.</p>
@@ -333,7 +524,9 @@ export default function Login() {
               </div>
 
               <div className="sk-login-benefit">
-                <div className="sk-login-benefit-icon">ϟ</div>
+                <div className="sk-login-benefit-icon" aria-hidden="true">
+                  ϟ
+                </div>
                 <div>
                   <h3>Instant scoring</h3>
                   <p>Auto-graded MCQs with topic-wise analysis.</p>
@@ -341,7 +534,9 @@ export default function Login() {
               </div>
 
               <div className="sk-login-benefit">
-                <div className="sk-login-benefit-icon">♧</div>
+                <div className="sk-login-benefit-icon" aria-hidden="true">
+                  ♧
+                </div>
                 <div>
                   <h3>Built for teams</h3>
                   <p>Colleges, companies, and communities use Sklassics Quiz.</p>
@@ -365,6 +560,7 @@ export default function Login() {
             </div>
           </section>
 
+          {/* Login form */}
           <section className="sk-login-card">
             <div className="sk-login-brand">
               <img src={sklassicsLogo} alt="Sklassics" />
@@ -384,13 +580,16 @@ export default function Login() {
               <button
                 type="button"
                 className={accountTab === "login" ? "active" : ""}
+                aria-pressed={accountTab === "login"}
                 onClick={() => setAccountTab("login")}
               >
                 Login
               </button>
+
               <button
                 type="button"
                 className={accountTab === "register" ? "active" : ""}
+                aria-pressed={accountTab === "register"}
                 onClick={() => setAccountTab("register")}
               >
                 Register
@@ -401,13 +600,16 @@ export default function Login() {
               <button
                 type="button"
                 className={loginMethod === "otp" ? "active" : ""}
+                aria-pressed={loginMethod === "otp"}
                 onClick={() => setLoginMethod("otp")}
               >
                 OTP Login
               </button>
+
               <button
                 type="button"
                 className={loginMethod === "password" ? "active" : ""}
+                aria-pressed={loginMethod === "password"}
                 onClick={() => setLoginMethod("password")}
               >
                 Password Login
@@ -421,8 +623,9 @@ export default function Login() {
                   type="email"
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
-                  placeholder="Enter your email"
+                  placeholder="Enter your registered email"
                   autoComplete="email"
+                  aria-label="Email address"
                   required
                 />
               </label>
@@ -440,6 +643,7 @@ export default function Login() {
                         ? "current-password"
                         : "new-password"
                     }
+                    aria-label="Password"
                     required
                   />
                 </label>
@@ -455,7 +659,7 @@ export default function Login() {
             </form>
 
             <p className="sk-login-secure">
-              🔒 Secure {loginMethod === "otp" ? "OTP-based" : "password-based"}{" "}
+              🔒{loginMethod === "otp" ? "OTP-based secure" : "password-based"}{" "}
               {accountTab === "register" ? "registration" : "login"}
             </p>
           </section>
